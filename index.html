@@ -40,6 +40,10 @@
         socket.on('connect', () => {
             console.log('Connected to server');
         });
+
+        function sendMessage() {
+            socket.emit("clientMessage")
+        }
     </script>
 </body>
 
