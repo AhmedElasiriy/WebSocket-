@@ -41,8 +41,17 @@
             console.log('Connected to server');
         });
 
+        socket.on('serverMessage', (data) => {
+            console.log(data);
+        });
+
         function sendMessage() {
-            socket.emit("clientMessage")
+            let data = {
+                message: document.getElementById("messageInput").value,
+                userId: 1,
+                chatRoomId: 1
+            }
+            socket.emit("clientMessage", data);
         }
     </script>
 </body>
