@@ -11,15 +11,24 @@ function initializeSocket(httpServer) {
 
         socket.on('clientMessage', (data) => {
             console.log('clientMessage =>', data);
-            // socket.emit // send message to client that connected to this socket only
-            socket.emit('serverMessage', { message: 'send message to client that connected to this socket only' })
-            // io.emit // send message to all clients that connected to this socket 
-            oi.emit('serverMessage', { message: 'send message to all clients that connected to this socket' })
-            // socket.broadcast.emit // send message to all clients that connected to this socket except the sender client 
-            socket.broadcast.emit('serverMessage', { message: 'send message to all clients except the sender client' })
+            // oi.to(data.roomId).emit('serverMessage', data.message); // send message to all users in room 
+            // socket.broadcast.to(data.roomId).emit('serverMessage', data.message); // send message to all users in room except sender
         });
 
+        socket.on("leaveRoom", (data) => {
+            console.log('leaveRoom =>', data);
+            socket.leave(data.roomId);
+        });
 
+        socket.on("joinRoom", (data) => {
+            console.log('joinRoom =>', data);
+            socket.join(data.roomId);
+        });
+
+        socket.on("leaveAllRooms", () => {
+            console.log('leaveAllRooms');
+            socket.leaveAll();
+        });
 
     });
 
