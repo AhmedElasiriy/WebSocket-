@@ -1,17 +1,17 @@
 const SocketServer = require('socket.io')
 
 function initializeSocket(httpServer) {
-    const oi = SocketServer(httpServer, {
+    const io = SocketServer(httpServer, {
         cors: {
             origin: '*',
         }
     })
-    oi.on('connection', (socket) => {
+    io.on('connection', (socket) => {
         console.log('new user connected');
 
         socket.on('clientMessage', (data) => {
             console.log('clientMessage =>', data);
-            // oi.to(data.roomId).emit('serverMessage', data.message); // send message to all users in room 
+            // io.to(data.roomId).emit('serverMessage', data.message); // send message to all users in room 
             // socket.broadcast.to(data.roomId).emit('serverMessage', data.message); // send message to all users in room except sender
         });
 
